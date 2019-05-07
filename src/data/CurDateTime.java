@@ -1,7 +1,10 @@
 package data;
 
+import java.time.LocalDateTime;
+
 public class CurDateTime {
 
+    private LocalDateTime dateTime;
     private static CurDateTime instance;
 
     public static CurDateTime getInstance() {
@@ -12,6 +15,10 @@ public class CurDateTime {
     }
 
     private CurDateTime() {
+        dateTime = LocalDateTime.now();
+    }
 
+    public LocalDateTime getRawTime() {
+        return dateTime;
     }
 }

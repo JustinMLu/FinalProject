@@ -18,7 +18,33 @@ public class CurDateTime {
         dateTime = LocalDateTime.now();
     }
 
-    public LocalDateTime getRawTime() {
+    public LocalDateTime getRawDateTime() {
         return dateTime;
+
     }
+
+    public int getHour() {
+        return dateTime.getHour();
+    }
+
+    public int getMinute() {
+        return dateTime.getMinute();
+    }
+
+    public int getSecond() {
+        return dateTime.getSecond();
+    }
+
+    public long getYear() {
+        return dateTime.getYear();
+    }
+
+    public int getMonth() {
+        return dateTime.getMonth().getValue();
+    }
+
+    public int getDay() {
+        return dateTime.getDayOfMonth();
+    }
+
 }

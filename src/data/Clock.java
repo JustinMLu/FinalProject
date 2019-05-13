@@ -29,13 +29,13 @@ public class Clock {
         minute = data.getMinute();
     }
 
-    public static void main(String[] args) {
-        Clock clock = new Clock();
-
-        while (true) {
-            clock.update();
-
-            System.out.println("sec: " + clock.second);
-        }
-    }
+//    public static void main(String[] args) {
+//        Clock clock = new Clock();
+//
+//        while (true) {
+//            clock.update();
+//
+//            System.out.println("sec: " + clock.second);
+//        }
+//    }
 }

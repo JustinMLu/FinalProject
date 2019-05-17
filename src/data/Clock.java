@@ -1,41 +1,62 @@
 package data;
 
+import java.util.HashMap;
+
 public class Clock {
 
     private CurDateTime data;
-    private long year;
-    private int month;
+    private int year;
+    private String month;
     private int day;
     private int hour;
     private int minute;
-    private int second;
+    private boolean runOnce = true;
+    private long elapsedSeconds;
+    private long startMs;
+    private int[] clockData;
+
 
     public Clock() {
         data = CurDateTime.getInstance();
+        year = data.getRawDateTime().getYear();
+        month = data.getRawDateTime().getMonth().toString();
+        day = data.getRawDateTime().getDayOfMonth();
+        hour = data.getRawDateTime().getHour();
+        minute = data.getRawDateTime().getMinute();
 
-        year = data.getYear();
-        month = data.getMonth();
-        day = data.getDay();
-        hour = data.getHour();
-        minute = data.getMinute();
-        second = data.getSecond();
+        clockData = new int[4];
+    }
+
+    public String getMonth() {
+        return month;
+    }
+
+    public int getData(int var) {
+        return clockData[var];
     }
 
     public void update() {
-        year = data.getYear();
-        month = data.getMonth();
-        day = data.getDay();
-        hour = data.getHour();
-        minute = data.getMinute();
-    }
+        if (runOnce) {
+            startMs = System.currentTimeMillis();
+            runOnce = false;
+        }
 
-//    public static void main(String[] args) {
-//        Clock clock = new Clock();
-//
-//        while (true) {
-//            clock.update();
-//
-//            System.out.println("sec: " + clock.second);
-//        }
-//    }
+        elapsedSeconds = (long) ((System.currentTimeMillis() - startMs) / 1000);
+
+        if (elapsedSeconds >= 5) {
+            data.update();
+            year = data.getRawDateTime().getYear();
+            month = data.getRawDateTime().getMonth().toString();
+            day = data.getRawDateTime().getDayOfMonth();
+            hour = data.getRawDateTime().getHour();
+            minute = data.getRawDateTime().getMinute();
+
+            elapsedSeconds = 0;
+            runOnce = true;
+        }
+        clockData[0] = year;
+        clockData[1] = day;
+        clockData[2] = hour;
+        clockData[3] = minute;
+    }
 }

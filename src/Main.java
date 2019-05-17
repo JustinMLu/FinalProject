@@ -1,18 +1,25 @@
+
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import view.MainGUI;
+import view.View;
+
 
 public class Main extends Application {
 
-    @Override
-    public void start(Stage primaryStage) throws Exception{
-        Pane root = new Pane();
+    MainGUI mainInterface = new MainGUI();
 
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+
+        Scene scene = new Scene(mainInterface.getRootPane(), View.PANE_WIDTH, View.PANE_HEIGHT);
+
+        mainInterface.startApp();
+
+        primaryStage.setTitle("Klok Application");
+        primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

@@ -1,7 +1,5 @@
 package data;
 
-import java.util.HashMap;
-
 public class Clock {
 
     private CurDateTime data;
@@ -11,11 +9,14 @@ public class Clock {
     private int hour;
     private int minute;
     private boolean runOnce = true;
-    private long elapsedSeconds;
+    private long elapsedMs;
     private long startMs;
     private int[] clockData;
 
-
+    /*
+    Upon initialization, all local variables pertaining to date and time are assigned their
+    respective values by using the CurDateTime Object, referenced here as 'data'.
+     */
     public Clock() {
         data = CurDateTime.getInstance();
         year = data.getRawDateTime().getYear();
@@ -24,26 +25,39 @@ public class Clock {
         hour = data.getRawDateTime().getHour();
         minute = data.getRawDateTime().getMinute();
 
+        //integer array for conveniently assigning and accessing clock data.
         clockData = new int[4];
     }
 
+    //Retrieves the month as a String
     public String getMonth() {
         return month;
     }
 
+    //Retrieves the other date time variables inside the clockData array.
     public int getData(int var) {
         return clockData[var];
     }
 
+    /*
+    When called, records the startMs time ONCE as well as a running counter of
+    the current time (milliseconds). By subtracting these two variables and then,
+    dividing by 1000, one is able to figure out how many seconds have elapsed
+    since the method was initially called in a loop.
+     */
     public void update() {
         if (runOnce) {
             startMs = System.currentTimeMillis();
             runOnce = false;
         }
 
-        elapsedSeconds = (long) ((System.currentTimeMillis() - startMs) / 1000);
+        elapsedMs = (System.currentTimeMillis() - startMs) / 1000;
 
-        if (elapsedSeconds >= 5) {
+        /*
+        If the elapsed seconds are greater than 5,
+        update all variables and reset the timer mechanism
+        */
+        if (elapsedMs >= 5) {
             data.update();
             year = data.getRawDateTime().getYear();
             month = data.getRawDateTime().getMonth().toString();
@@ -51,9 +65,11 @@ public class Clock {
             hour = data.getRawDateTime().getHour();
             minute = data.getRawDateTime().getMinute();
 
-            elapsedSeconds = 0;
+            elapsedMs = 0;
             runOnce = true;
         }
+
+        //Store data inside clockData array except for month which is a String.
         clockData[0] = year;
         clockData[1] = day;
         clockData[2] = hour;
